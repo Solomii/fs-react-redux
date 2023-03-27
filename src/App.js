@@ -1,13 +1,18 @@
-import "./App.css";
-import CounterReducer from "./components/CounterReducer"
+import React from "react";
+// import CounterReducer from "./components/CounterReducer"
 
-function App() {
+const App = () => {
     return (
         <>
-            <h1>test</h1>
-            <CounterReducer/>
+            <h1>Redux</h1>
+            {/* <CounterReducer/> */}
+            <div>
+                <h2>count:{0}</h2>
+                <button onClick={() => {}}>+</button>
+                <button onClick={() => {}}>-</button>
+            </div>
         </>
     );
-}
+};
 
 export default App;
