@@ -6,7 +6,7 @@ const todoSlice = createSlice({
     tasks: [
       {
         id: Date.now() - 1,
-        content: 'test text',
+        text: 'test text',
         isDone: false,
       },
     ],
@@ -16,14 +16,16 @@ const todoSlice = createSlice({
       const {payload:{text}}= action;
       state.tasks.push({
         id: Date.now(),
-        text,
+        text:text,
         isDone: false,
       });
     },
+
     removeTask(state, action) {
       const {payload:{id}}= action;
       state.tasks = state.tasks.filter((task) => task.id !== id);
     },
+
     setDoneTask(state, action) {
       const {payload:{id}}= action;
       state.tasks = state.tasks.map((task) =>

@@ -13,10 +13,10 @@ const Todo = () => {
     }
   };
   const handleDone = (id) => {
-    dispatch(setDoneTask({id}))
+    dispatch(setDoneTask({ id }));
   };
   const handleDelete = (id) => {
-    dispatch(removeTask({id}))
+    dispatch(removeTask({ id }));
   };
   return (
     <section>
@@ -42,11 +42,7 @@ const Todo = () => {
             onChange={() => handleDone(id)}
           />
           <h3 style={{ margin: 'auto' }}> {text} </h3>
-          <button
-            onClick={() => handleDelete(id)}
-          >
-            Delete
-          </button>
+          <button onClick={() => handleDelete(id)}>Delete</button>
         </article>
       ))}
     </section>
