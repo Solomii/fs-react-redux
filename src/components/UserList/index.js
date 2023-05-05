@@ -1,12 +1,14 @@
 import React, {useEffect} from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getAllUsers } from '../../store/usersSlice';
 
 const UsersList = (props) => {
-  const { isFetching, error, users, loadUsers } = props;
+  const { isFetching, error, users, loadUsers } = useSelector((state)=> state.users)
+  const dispatch = useDispatch();
   useEffect(()=>{
-    loadUsers(13)
-  }, [])
+    dispatch(getAllUsers({res:3}))
+  }, [dispatch])
   return (
     <>
     <h1>UserList</h1>
@@ -26,9 +28,11 @@ const UsersList = (props) => {
 };
 
 //const mapStateToProps = (store) => store.users
-const mapStateToProps = ({ users }) => users;
-const mapDispatchToProps =(dispatch)=>({
-  loadUsers: (currRes) => dispatch(getAllUsers({res:currRes}))
-})
+// const mapStateToProps = ({ users }) => users;
+// const mapDispatchToProps =(dispatch)=>({
+//   loadUsers: (currRes) => dispatch(getAllUsers({res:currRes}))
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersList);
+// export default connect(mapStateToProps, mapDispatchToProps)(UsersList);
+
+export default UsersList;

@@ -2,14 +2,15 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getAllUsers = createAsyncThunk(
   'users/getAllUsers',
-  async (params = {res:5}, thunkAPI) => {
+  async (params = { res: 5 }, thunkAPI) => {
     try {
-      const { dispatch } = thunkAPI;
       const { results } = await fetch(
-        'https://randomuser.me/api/?results='+params.res
+        'https://randomuser.me/api/?results=' + params.res
       ).then((res) => res.json());
-      dispatch(loadUsers(results))
-    } catch (error) {}
+      return results;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
@@ -21,11 +22,30 @@ const usersSlice = createSlice({
     users: [],
   },
   reducers: {
-    loadUsers(state, action){
+    loadUsers(state, action) {
       state.users = action.payload;
-    }
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getAllUsers.pending, (state, action) => {
+      state.isFetching = true;
+      state.error = null;
+    });
+    builder.addCase(getAllUsers.fulfilled, (state, action) => {
+      state.isFetching = false;
+      state.users = action.payload;
+      state.error = null;
+    });
+    builder.addCase(getAllUsers.rejected, (state, action) => {
+      state.isFetching = false;
+      state.error = action.payload;
+    });
   },
 });
 
-const { reducer, actions:{loadUsers} } = usersSlice;
+const {
+  reducer,
+  actions: { loadUsers },
+} = usersSlice;
+
 export default reducer;
